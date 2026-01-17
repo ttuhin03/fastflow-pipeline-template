@@ -1,0 +1,10 @@
+{
+    "description": "A pipeline that waits for 20 seconds before succeeding, useful for testing timeouts and long-running status.",
+    "tags": [
+        "testing",
+        "delay"
+    ],
+    "timeout": 60,
+    "cpu_hard_limit": 0.2,
+    "mem_hard_limit": "256m"
+}

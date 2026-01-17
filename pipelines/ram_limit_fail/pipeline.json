@@ -1,0 +1,9 @@
+{
+    "description": "This pipeline consumes 100MB of RAM but has a 50MB limit. It should be OOM-killed by Docker.",
+    "tags": [
+        "testing",
+        "ram-limit",
+        "fail"
+    ],
+    "mem_hard_limit": "50m"
+}

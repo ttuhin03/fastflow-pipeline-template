@@ -1,0 +1,9 @@
+{
+    "description": "Pipeline using an alternative JSON filename ({pipeline_name}.json).",
+    "tags": [
+        "example",
+        "custom-json"
+    ],
+    "enabled": true,
+    "webhook_key": "b-secret-webhook-key"
+}

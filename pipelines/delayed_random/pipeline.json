@@ -1,0 +1,13 @@
+{
+    "description": "A pipeline with a 20s delay followed by a random outcome. Perfect for testing retry strategies.",
+    "tags": [
+        "testing",
+        "random",
+        "retries"
+    ],
+    "retry_attempts": 5,
+    "retry_strategy": {
+        "type": "fixed_delay",
+        "delay": 10
+    }
+}

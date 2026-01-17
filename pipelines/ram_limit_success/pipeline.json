@@ -1,0 +1,9 @@
+{
+    "description": "This pipeline consumes 100MB of RAM and has a 256MB limit. It should complete successfully.",
+    "tags": [
+        "testing",
+        "ram-limit",
+        "success"
+    ],
+    "mem_hard_limit": "256m"
+}

@@ -1,0 +1,9 @@
+{
+    "description": "A pipeline designed to fail, demonstrating error handling and UI status reporting.",
+    "tags": [
+        "testing",
+        "failure-demo"
+    ],
+    "retry_attempts": 0,
+    "enabled": true
+}
