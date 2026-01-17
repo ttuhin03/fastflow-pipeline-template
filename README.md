@@ -141,3 +141,15 @@ If you have pure Python code that **works locally** but fails when running in th
     -   Any logs available from the Orchestrator UI.
 
 We are committed to the "if it runs locally, it runs in Fast-Flow" promise and will address any compatibility issues promptly.
+
+---
+
+## ⚖️ Disclaimer & Liability Waiver
+
+**Important Notice regarding Security and Liability:**
+
+This project is in an **early stage / Beta status**. Since the Orchestrator requires access to the Docker socket to execute pipelines, improper configuration poses a security risk to the host system.
+
+-   **Use at your own risk**: The software is provided "as is". The author assumes no liability for hardware damage, data loss, security vulnerabilities, or business interruptions that may arise from the use of this software.
+-   **No Warranty**: There is no guarantee regarding the correctness, functionality, or constant availability of the software.
+-   **Security Recommendation**: Never operate this orchestrator unprotected on the public internet. Always use the recommended Docker socket proxy and strong authentication.
