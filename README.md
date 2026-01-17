@@ -1,5 +1,8 @@
 # 🚀 Fast-Flow Pipeline Template
 
+> [!NOTE]
+> Lies unser [Anti-Overhead Manifesto](https://github.com/ttuhin03/fastflow/blob/main/docs/manifesto.md), um zu verstehen, warum Fast-Flow die bessere Alternative zu Airflow, Dagster & Co. ist.
+
 Welcome to the official template for [Fast-Flow](https://github.com/ttuhin03/fastflow). This repository is designed to help you jumpstart your data workflows with a structure that is optimized for speed, reliability, and developer experience.
 
 ---
@@ -12,6 +15,24 @@ Fast-Flow is built on the principle of **Zero-Config Discovery**. You don't need
 2.  **Add `main.py`**: This is your entry point. Fast-Flow will execute this file.
 3.  **Define Dependencies**: Add a `requirements.txt` if you need external packages.
 4.  **Configure (Optional)**: Add a `pipeline.json` to fine-tune resource limits and retries.
+
+### 📂 Directory Structure
+
+```text
+pipelines/
+├── pipeline_a/          # Standard example
+│   ├── main.py
+│   ├── requirements.txt
+│   └── pipeline.json
+├── pipeline_b/          # Custom JSON name
+│   ├── main.py
+│   └── data_processor.json
+├── failing_pipeline/    # Error demo
+│   ├── main.py
+│   └── pipeline.json
+└── pipeline_c/          # Minimal setup
+    └── main.py
+```
 
 ---
 
@@ -106,3 +127,17 @@ You can trigger any pipeline via a simple HTTP POST request if you define a `web
 1.  **Clean Code**: Keep your `main.py` modular. Feel free to add sub-modules in the same folder.
 2.  **Environment Variables**: Use `os.getenv()` for configuration. Secure secrets are managed in the Fast-Flow UI.
 3.  **Logs**: Just use `print()`. Fast-Flow captures stdout and stderr automatically and streams them to the UI.
+
+---
+
+## 🆘 Support & Troubleshooting
+
+If you have pure Python code that **works locally** but fails when running in the Fast-Flow Orchestrator, please let us know!
+
+1.  **Open an Issue**: [Fast-Flow Issues](https://github.com/ttuhin03/fastflow/issues)
+2.  **What to include**:
+    -   The `main.py` code file.
+    -   Your `pipeline.json` and `requirements.txt`.
+    -   Any logs available from the Orchestrator UI.
+
+We are committed to the "if it runs locally, it runs in Fast-Flow" promise and will address any compatibility issues promptly.
