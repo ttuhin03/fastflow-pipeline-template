@@ -1,102 +1,84 @@
-# Fast-Flow Pipeline Template
+# 🚀 Fast-Flow Pipeline Template
 
-Welcome to the official template for [Fast-Flow](https://github.com/ttuhin03/fastflow) pipelines. This repository serves as a blueprint for structuring your data pipelines and configuring them for the Fast-Flow Orchestrator.
-
-## How to add a pipeline
-
-Adding a new pipeline is as simple as creating a folder. Fast-Flow uses **Automatic Discovery**, so there's no need for manual registration.
-
-1. **Create a folder** under `pipelines/` (e.g., `pipelines/my_new_pipeline/`). The folder name will be the pipeline's name.
-2. **Add a `main.py`**: This is the only required file. It contains your pipeline logic.
-3. **(Optional) Add `requirements.txt`**: List any Python dependencies your script needs.
-4. **(Optional) Add `pipeline.json`**: Define resource limits, retries, and other metadata.
+Welcome to the official template for [Fast-Flow](https://github.com/ttuhin03/fastflow). This repository is designed to help you jumpstart your data workflows with a structure that is optimized for speed, reliability, and developer experience.
 
 ---
 
-## Local Testing
+## 🏗️ How to Add a Pipeline
 
-One of the key advantages of Fast-Flow is that **if it runs locally, it runs in the Orchestrator.** You don't need to build Docker images or manage complex environments.
+Fast-Flow is built on the principle of **Zero-Config Discovery**. You don't need to register pipelines in a database or a UI—just push your code.
 
-### The `uv` Advantage
-Fast-Flow uses `uv` under the hood for blazing-fast execution and dependency management. To test your pipeline locally:
+1.  **Create a Directory**: Add a new folder under `pipelines/` (e.g., `pipelines/data_sync/`).
+2.  **Add `main.py`**: This is your entry point. Fast-Flow will execute this file.
+3.  **Define Dependencies**: Add a `requirements.txt` if you need external packages.
+4.  **Configure (Optional)**: Add a `pipeline.json` to fine-tune resource limits and retries.
 
+---
+
+## 🧪 Local Testing: The "If it runs, it runs" Promise
+
+The biggest pain point in modern orchestration is "Docker Hell"—where code works locally but fails in production due to environment mismatches.
+
+**Fast-Flow eliminates this.** Because we use `uv` and a standardized runtime environment, local execution is identical to production execution.
+
+### Test it in seconds:
 ```bash
 cd pipelines/pipeline_a
-pip install -r requirements.txt  # Or use 'uv pip install'
+pip install -r requirements.txt  # Or 'uv pip install' for speed
 python main.py
 ```
-
-**If this works on your machine, it will work exactly the same way in the Fast-Flow Orchestrator.**
-
----
-
-## The JIT Effect
-
-Forget about slow Docker builds and registry pushes. Fast-Flow uses a **Just-In-Time (JIT)** approach to containerization:
-
-- **No Docker Builds**: Your code is synced via Git and executed immediately.
-- **UV-Cache Magic**: Dependencies are installed on-the-fly via `uv`. 
-- **Lightning Fast**: Thanks to a shared cache, dependency installation usually takes **less than 1 second** for cached items.
-- **Pre-Heat**: The system can even "pre-heat" your dependencies during the Git sync, so they are ready before the first run.
+> [!IMPORTANT]
+> If your script runs successfully here, it is guaranteed to run in the Fast-Flow Orchestrator. No Docker image builds required.
 
 ---
 
-## Pipeline Repository Documentation
+## ⚡ The JIT (Just-In-Time) Effect
 
-### Directory Structure
+Fast-Flow doesn't use static Docker images for every pipeline. Instead, it uses a high-performance **JIT Containerization** approach:
 
-```text
-pipelines/
-├── pipeline_a/
-│   ├── main.py              # Required
-│   ├── requirements.txt     # Optional
-│   └── pipeline.json        # Optional metadata
-├── pipeline_b/
-│   ├── main.py
-│   └── data_processor.json  # Alternative: {pipeline_name}.json
-├── pipeline_c/
-│   └── main.py              # Minimal setup
-├── failing_pipeline/
-│   └── main.py              # Always fails (testing)
-├── ram_limit_fail/
-│   ├── main.py              # Consumes 100MB, 50MB limit
-│   └── pipeline.json
-├── ram_limit_success/
-│   ├── main.py              # Consumes 100MB, 256MB limit
-│   └── pipeline.json
-└── delayed_random/
-    └── main.py              # 20s delay, random outcome
-```
-
-### Pipeline Detection
-- **Discovery**: Automatically detected via Git sync.
-- **Validation**: Must contain a `main.py`.
-- **Naming**: Folder name = Pipeline ID.
+-   **Instant Deployment**: Skip the 5-minute `docker build` and `docker push` cycle. Your code is live the moment you push to Git.
+-   **UV Magic**: We use [uv](https://github.com/astral-sh/uv) to install dependencies at runtime.
+-   **Aggressive Caching**: Thanks to a project-wide shared cache, dependency installation usually takes **< 500ms**.
+-   **Isolation**: Every run still happens in a clean, isolated Docker container for security and resource control.
 
 ---
 
-## Configuration Reference (`pipeline.json`)
+## 📂 Example Gallery
 
-All fields in `pipeline.json` (or `{pipeline_name}.json`) are optional.
+This template includes several pre-configured pipelines to demonstrate various scenarios:
 
-### Resource Limits
-| Field | Type | Description |
+| Pipeline | Purpose | Key Feature |
 | :--- | :--- | :--- |
-| `cpu_hard_limit` | Float | CPU cores (e.g., `1.0`, `0.5`). Enforced by Docker. |
-| `mem_hard_limit` | String| RAM limit (e.g., `"512m"`, `"1g"`). Triggers OOM-kill if exceeded. |
-| `cpu_soft_limit` | Float | Monitoring threshold for CPU. |
-| `mem_soft_limit` | String| Monitoring threshold for Memory. |
+| `pipeline_a` | **Standard Example** | Env vars + `requirements.txt` |
+| `pipeline_b` | **Custom Metadata** | Uses `data_processor.json` instead of `pipeline.json` |
+| `pipeline_c` | **Minimalist** | Only a `main.py`—nothing else |
+| `failing_pipeline` | **Error Testing** | Demonstrates how failures look in the UI |
+| `delayed_success` | **Runtime Testing** | 20s delay to test status monitoring |
+| `delayed_random` | **Retry Demo** | 20s delay followed by random success/failure |
+| `ram_limit_fail` | **OOM Safety** | Consumes 100MB with a 50MB limit (Should fail) |
+| `ram_limit_success`| **Resource Control** | Consumes 100MB with a 256MB limit (Should pass) |
 
-### Scheduler & Retries
-| Field | Type | Description |
+---
+
+## 🛠️ Configuration Reference (`pipeline.json`)
+
+Fine-tune your pipelines by adding a `pipeline.json` file in the pipeline directory.
+
+### 💾 Resource Limits
+| Field | Default | Description |
 | :--- | :--- | :--- |
-| `timeout` | Int | Max runtime in seconds before the run is aborted. |
-| `retry_attempts`| Int | Number of retry attempts on failure. |
-| `enabled` | Bool | Whether the pipeline is active (`true` by default). |
+| `cpu_hard_limit` | None | Max CPU cores (e.g., `0.5`, `2.0`). Strictly enforced. |
+| `mem_hard_limit` | None | Max RAM (e.g., `"512m"`, `"2g"`). Triggers OOM-kill if exceeded. |
+| `cpu_soft_limit` | None | Threshold for UI warnings/monitoring. |
+| `mem_soft_limit` | None | Threshold for UI warnings/monitoring. |
 
-### Retry Strategy Examples
+### 🔄 Retries & Error Handling
+We support advanced retry strategies out of the box:
 
-**Exponential Backoff** (Best for external APIs):
+-   **Exponential Backoff**: Ideal for flaky third-party APIs.
+-   **Fixed Delay**: Good for internal services that need a quick breather.
+-   **Custom Schedule**: For when you need specific timing (e.g., `[60, 300, 3600]`).
+
 ```json
 {
   "retry_attempts": 3,
@@ -109,25 +91,18 @@ All fields in `pipeline.json` (or `{pipeline_name}.json`) are optional.
 }
 ```
 
-**Fixed Delay** (Best for internal services):
-```json
-{
-  "retry_attempts": 3,
-  "retry_strategy": {
-    "type": "fixed_delay",
-    "delay": 120
-  }
-}
-```
+### 🔗 Triggering via Webhooks
+You can trigger any pipeline via a simple HTTP POST request if you define a `webhook_key`:
 
-### Webhooks & Environment
-- **`default_env`**: Set default environment variables for your pipeline. (Note: Use the UI for Secrets!)
-- **`webhook_key`**: A secret key to trigger your pipeline via HTTP POST:
-  `POST /api/webhooks/{pipeline_name}/{webhook_key}`
+```json
+{ "webhook_key": "your-secret-key" }
+```
+**Endpoint**: `POST /api/webhooks/{pipeline_id}/{webhook_key}`
 
 ---
 
-## Best Practices
-1. **Pin Dependencies**: Use specific versions in `requirements.txt`.
-2. **Secrets**: Never commit secrets to the repo. Use the Fast-Flow UI's secret management.
-3. **Descriptions**: Add a `description` in your JSON for better UI visibility.
+## 🌟 Best Practices
+
+1.  **Clean Code**: Keep your `main.py` modular. Feel free to add sub-modules in the same folder.
+2.  **Environment Variables**: Use `os.getenv()` for configuration. Secure secrets are managed in the Fast-Flow UI.
+3.  **Logs**: Just use `print()`. Fast-Flow captures stdout and stderr automatically and streams them to the UI.
