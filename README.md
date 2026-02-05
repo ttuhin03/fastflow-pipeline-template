@@ -24,9 +24,9 @@ pipelines/
 │   ├── main.py
 │   ├── requirements.txt
 │   └── pipeline.json
-├── pipeline_b/          # Custom JSON name
+├── pipeline_b/          # Custom JSON name (pipeline_b.json)
 │   ├── main.py
-│   └── data_processor.json
+│   └── pipeline_b.json
 ├── pipeline_c/          # Minimal setup
 │   └── main.py
 ├── notebook_example/    # Notebook pipeline (main.ipynb, type: "notebook")
@@ -40,6 +40,12 @@ pipelines/
 │   ├── main.py
 │   └── pipeline.json
 ├── daemon_example/      # Daemon pipeline (timeout: 0, restart_on_crash, restart_interval)
+│   ├── main.py
+│   └── pipeline.json
+├── chaining_upstream/   # Pipeline-Chaining: triggers chaining_downstream on success
+│   ├── main.py
+│   └── pipeline.json
+├── chaining_downstream/ # Triggered by chaining_upstream
 │   ├── main.py
 │   └── pipeline.json
 ├── full_config_example/ # Every pipeline.json field set (reference)
@@ -87,13 +93,14 @@ This template includes several pre-configured pipelines to demonstrate various s
 
 | Pipeline | Purpose | Key Feature |
 | :--- | :--- | :--- |
-| `pipeline_a` | **Standard Example** | Env vars + `requirements.txt` |
-| `pipeline_b` | **Custom Metadata** | Uses `data_processor.json` instead of `pipeline.json` |
+| `pipeline_a` | **Standard Example** | Env vars + `requirements.txt`, triggers `pipeline_b` on success |
+| `pipeline_b` | **Custom Metadata** | Uses `pipeline_b.json`, triggers `pipeline_c` on success |
 | `pipeline_c` | **Minimalist** | Only a `main.py`—nothing else |
 | `notebook_example` | **Notebook Pipeline** | Jupyter `main.ipynb`, cell-level retries, `type: "notebook"` |
 | `scheduled_demo` | **Cron / Scheduler** | Schedule in pipeline.json (`schedule_cron`, optional `schedule_start`/`schedule_end`) or in UI → Scheduler |
 | `run_once_example` | **One-Time Run** | `run_once_at` in pipeline.json – Pipeline runs once at the specified ISO datetime |
 | `daemon_example` | **Daemon / Permanent** | `timeout: 0`, `restart_on_crash`, `restart_cooldown`, optional `restart_interval` – long-running pipeline with auto-restart |
+| `chaining_upstream` / `chaining_downstream` | **Pipeline-Chaining** | `downstream_triggers` in pipeline.json – when upstream succeeds, downstream starts automatically |
 | `full_config_example` | **Full pipeline.json** | Every field set (limits, retry, env, webhook, schedule, etc.) – use as reference |
 | `failing_pipeline` | **Error Testing** | Demonstrates how failures look in the UI |
 | `delayed_success` | **Runtime Testing** | 20s delay to test status monitoring |
@@ -147,6 +154,23 @@ You can define the schedule **in pipeline.json** or in the Fast-Flow UI:
 **Daemon (permanent) pipelines:** Set `timeout: 0` for no timeout. Use `restart_on_crash: true` to auto-restart on failure, `restart_cooldown` (seconds) between stop and restart. Optional `restart_interval` (cron or seconds) for periodic restarts. See `daemon_example/`.
 
 See [Fast-Flow docs – Scheduling](https://github.com/ttuhin03/fastflow/blob/main/docs/docs/pipelines/erweiterte-pipelines.md#4-scheduling-zeitgesteuerte-ausführung).
+
+### 🔗 Pipeline-Chaining (Downstream-Trigger)
+When a pipeline finishes, it can automatically start others. Set `downstream_triggers` in pipeline.json:
+
+```json
+{
+  "downstream_triggers": [
+    {"pipeline": "pipeline_b", "on_success": true, "on_failure": false},
+    {"pipeline": "pipeline_c", "on_success": true, "on_failure": true}
+  ]
+}
+```
+
+- `on_success`: Start downstream when this pipeline succeeds (default: `true`)
+- `on_failure`: Start downstream when this pipeline fails (default: `false`)
+
+See `chaining_upstream` / `chaining_downstream` and the `pipeline_a` → `pipeline_b` → `pipeline_c` chain.
 
 ### 🔗 Triggering via Webhooks
 You can trigger any pipeline via a simple HTTP POST request if you define a `webhook_key`:

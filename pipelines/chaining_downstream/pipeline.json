@@ -1,0 +1,4 @@
+{
+  "description": "Downstream pipeline – triggered by chaining_upstream on success.",
+  "tags": ["example", "chaining"]
+}

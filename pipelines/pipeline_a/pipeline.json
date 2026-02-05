@@ -1,20 +1,18 @@
 {
-    "description": "Standard example pipeline with requirements and configuration.",
-    "tags": [
-        "example",
-        "standard"
-    ],
-    "cpu_hard_limit": 0.5,
-    "mem_hard_limit": "512m",
-    "timeout": 3600,
-    "retry_attempts": 3,
-    "retry_strategy": {
-        "type": "exponential_backoff",
-        "initial_delay": 60,
-        "max_delay": 3600,
-        "multiplier": 2.0
-    },
-    "default_env": {
-        "LOG_LEVEL": "INFO"
-    }
+  "description": "Standard example pipeline with requirements and configuration. Triggers pipeline_b on success.",
+  "tags": ["example", "standard"],
+  "cpu_hard_limit": 0.5,
+  "mem_hard_limit": "512m",
+  "timeout": 3600,
+  "retry_attempts": 3,
+  "retry_strategy": {
+    "type": "exponential_backoff",
+    "initial_delay": 60,
+    "max_delay": 3600,
+    "multiplier": 2
+  },
+  "default_env": {"LOG_LEVEL": "INFO"},
+  "downstream_triggers": [
+    {"pipeline": "pipeline_b", "on_success": true, "on_failure": false}
+  ]
 }
