@@ -1,4 +1,7 @@
 {
-  "description": "Example for cron/scheduled runs. Add a job in Fast-Flow UI under Scheduler: choose this pipeline and set cron (e.g. 0 9 * * * for daily 09:00) or interval in seconds.",
-  "tags": ["scheduler", "cron", "example"]
+  "description": "Example for cron/scheduled runs. Schedule can be set here in pipeline.json or in the Fast-Flow UI (Scheduler).",
+  "tags": ["scheduler", "cron", "example"],
+  "schedule_cron": "0 9 * * *",
+  "schedule_start": "2025-01-01T00:00:00",
+  "schedule_end": "2025-12-31T23:59:59"
 }
