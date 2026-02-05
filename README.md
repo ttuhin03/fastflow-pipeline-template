@@ -36,6 +36,10 @@ pipelines/
 ├── scheduled_demo/      # Cron/scheduler example (schedule in pipeline.json or UI)
 │   ├── main.py
 │   └── pipeline.json
+├── full_config_example/ # Every pipeline.json field set (reference)
+│   ├── main.py
+│   ├── pipeline.json
+│   └── requirements.txt
 └── failing_pipeline/    # Error demo
     ├── main.py
     └── pipeline.json
@@ -82,6 +86,7 @@ This template includes several pre-configured pipelines to demonstrate various s
 | `pipeline_c` | **Minimalist** | Only a `main.py`—nothing else |
 | `notebook_example` | **Notebook Pipeline** | Jupyter `main.ipynb`, cell-level retries, `type: "notebook"` |
 | `scheduled_demo` | **Cron / Scheduler** | Schedule in pipeline.json (`schedule_cron`, optional `schedule_start`/`schedule_end`) or in UI → Scheduler |
+| `full_config_example` | **Full pipeline.json** | Every field set (limits, retry, env, webhook, schedule, etc.) – use as reference |
 | `failing_pipeline` | **Error Testing** | Demonstrates how failures look in the UI |
 | `delayed_success` | **Runtime Testing** | 20s delay to test status monitoring |
 | `delayed_random` | **Retry Demo** | 20s delay followed by random success/failure |

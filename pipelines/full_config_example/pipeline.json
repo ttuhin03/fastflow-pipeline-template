@@ -1,0 +1,31 @@
+{
+  "description": "Example with every pipeline.json field set. Use as reference for all options.",
+  "tags": ["example", "reference", "full-config"],
+  "type": "script",
+  "enabled": true,
+  "python_version": "3.12",
+
+  "cpu_hard_limit": 1.0,
+  "mem_hard_limit": "1g",
+  "cpu_soft_limit": 0.8,
+  "mem_soft_limit": "800m",
+  "timeout": 3600,
+  "retry_attempts": 3,
+  "retry_strategy": {
+    "type": "exponential_backoff",
+    "initial_delay": 60,
+    "max_delay": 3600,
+    "multiplier": 2.0
+  },
+
+  "default_env": {
+    "LOG_LEVEL": "INFO",
+    "MY_VAR": "from_pipeline_json"
+  },
+
+  "webhook_key": "replace-with-your-secret-in-production",
+
+  "schedule_cron": "0 8 * * *",
+  "schedule_start": "2025-01-01T00:00:00",
+  "schedule_end": "2025-12-31T23:59:59"
+}
