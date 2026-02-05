@@ -33,6 +33,9 @@ pipelines/
 │   ├── main.ipynb
 │   ├── pipeline.json
 │   └── requirements.txt
+├── scheduled_demo/      # Cron/scheduler example (configure schedule in UI)
+│   ├── main.py
+│   └── pipeline.json
 └── failing_pipeline/    # Error demo
     ├── main.py
     └── pipeline.json
@@ -78,6 +81,7 @@ This template includes several pre-configured pipelines to demonstrate various s
 | `pipeline_b` | **Custom Metadata** | Uses `data_processor.json` instead of `pipeline.json` |
 | `pipeline_c` | **Minimalist** | Only a `main.py`—nothing else |
 | `notebook_example` | **Notebook Pipeline** | Jupyter `main.ipynb`, cell-level retries, `type: "notebook"` |
+| `scheduled_demo` | **Cron / Scheduler** | Example for time-based runs; add schedule in UI → Scheduler |
 | `failing_pipeline` | **Error Testing** | Demonstrates how failures look in the UI |
 | `delayed_success` | **Runtime Testing** | 20s delay to test status monitoring |
 | `delayed_random` | **Retry Demo** | 20s delay followed by random success/failure |
@@ -116,6 +120,15 @@ We support advanced retry strategies out of the box:
   }
 }
 ```
+
+### ⏰ Scheduling (Cron / Interval)
+To run a pipeline on a schedule, use the **Scheduler** in the Fast-Flow UI (or the API):
+
+1. Open **Scheduler** and create a new job.
+2. Select the pipeline (e.g. `scheduled_demo`).
+3. Choose **Cron** (e.g. `0 9 * * *` = daily at 09:00, 5 fields: minute hour day month day_of_week) or **Interval** (e.g. `3600` = every hour in seconds).
+
+The schedule is stored in the orchestrator; the pipeline code does not contain the cron expression. See [Fast-Flow docs – Scheduling](https://github.com/ttuhin03/fastflow/blob/main/docs/docs/pipelines/erweiterte-pipelines.md#4-scheduling-zeitgesteuerte-ausführung).
 
 ### 🔗 Triggering via Webhooks
 You can trigger any pipeline via a simple HTTP POST request if you define a `webhook_key`:

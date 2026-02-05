@@ -1,0 +1,4 @@
+{
+  "description": "Example for cron/scheduled runs. Add a job in Fast-Flow UI under Scheduler: choose this pipeline and set cron (e.g. 0 9 * * * for daily 09:00) or interval in seconds.",
+  "tags": ["scheduler", "cron", "example"]
+}
