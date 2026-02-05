@@ -39,6 +39,9 @@ pipelines/
 ├── run_once_example/    # One-time execution (run_once_at in pipeline.json)
 │   ├── main.py
 │   └── pipeline.json
+├── daemon_example/      # Daemon pipeline (timeout: 0, restart_on_crash, restart_interval)
+│   ├── main.py
+│   └── pipeline.json
 ├── full_config_example/ # Every pipeline.json field set (reference)
 │   ├── main.py
 │   ├── pipeline.json
@@ -90,6 +93,7 @@ This template includes several pre-configured pipelines to demonstrate various s
 | `notebook_example` | **Notebook Pipeline** | Jupyter `main.ipynb`, cell-level retries, `type: "notebook"` |
 | `scheduled_demo` | **Cron / Scheduler** | Schedule in pipeline.json (`schedule_cron`, optional `schedule_start`/`schedule_end`) or in UI → Scheduler |
 | `run_once_example` | **One-Time Run** | `run_once_at` in pipeline.json – Pipeline runs once at the specified ISO datetime |
+| `daemon_example` | **Daemon / Permanent** | `timeout: 0`, `restart_on_crash`, `restart_cooldown`, optional `restart_interval` – long-running pipeline with auto-restart |
 | `full_config_example` | **Full pipeline.json** | Every field set (limits, retry, env, webhook, schedule, etc.) – use as reference |
 | `failing_pipeline` | **Error Testing** | Demonstrates how failures look in the UI |
 | `delayed_success` | **Runtime Testing** | 20s delay to test status monitoring |
@@ -138,6 +142,8 @@ You can define the schedule **in pipeline.json** or in the Fast-Flow UI:
 **In the UI:** Open **Scheduler**, create a job, select the pipeline, and set **Cron** (e.g. `0 9 * * *` = daily at 09:00), **Interval** in seconds, or **DATE** for a one-time run at a specific datetime.
 
 **One-time execution:** Set `run_once_at` (ISO datetime, e.g. `"2026-01-15T12:00:00"`) in pipeline.json. The orchestrator creates a one-time scheduler job on startup and after Git-Sync. See `run_once_example/`.
+
+**Daemon (permanent) pipelines:** Set `timeout: 0` for no timeout. Use `restart_on_crash: true` to auto-restart on failure, `restart_cooldown` (seconds) between stop and restart. Optional `restart_interval` (cron or seconds) for periodic restarts. See `daemon_example/`.
 
 See [Fast-Flow docs – Scheduling](https://github.com/ttuhin03/fastflow/blob/main/docs/docs/pipelines/erweiterte-pipelines.md#4-scheduling-zeitgesteuerte-ausführung).
 

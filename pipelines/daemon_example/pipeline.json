@@ -1,0 +1,8 @@
+{
+  "description": "Example daemon pipeline (permanent mode). Runs continuously with while loop. timeout: 0 = no limit. restart_on_crash: auto-restart on failure. restart_cooldown: seconds before restart. Optional restart_interval for periodic restart.",
+  "tags": ["daemon", "permanent", "example"],
+  "timeout": 0,
+  "restart_on_crash": true,
+  "restart_cooldown": 60,
+  "restart_interval": "0 3 * * *"
+}
