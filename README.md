@@ -114,6 +114,7 @@ Fine-tune your pipelines by adding a `pipeline.json` file in the pipeline direct
 | `mem_hard_limit` | None | Max RAM (e.g., `"512m"`, `"2g"`). Triggers OOM-kill if exceeded. |
 | `cpu_soft_limit` | None | Threshold for UI warnings/monitoring. |
 | `mem_soft_limit` | None | Threshold for UI warnings/monitoring. |
+| `max_instances` | None | Max concurrent runs of this pipeline (e.g. `1` = single instance only). |
 
 ### 🔄 Retries & Error Handling
 We support advanced retry strategies out of the box:

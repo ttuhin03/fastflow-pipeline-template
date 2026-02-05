@@ -27,5 +27,6 @@
 
   "schedule_cron": "0 8 * * *",
   "schedule_start": "2025-01-01T00:00:00",
-  "schedule_end": "2025-12-31T23:59:59"
+  "schedule_end": "2025-12-31T23:59:59",
+  "max_instances": 1
 }
