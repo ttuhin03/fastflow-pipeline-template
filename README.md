@@ -27,11 +27,15 @@ pipelines/
 ├── pipeline_b/          # Custom JSON name
 │   ├── main.py
 │   └── data_processor.json
-├── failing_pipeline/    # Error demo
-│   ├── main.py
-│   └── pipeline.json
-└── pipeline_c/          # Minimal setup
-    └── main.py
+├── pipeline_c/          # Minimal setup
+│   └── main.py
+├── notebook_example/    # Notebook pipeline (main.ipynb, type: "notebook")
+│   ├── main.ipynb
+│   ├── pipeline.json
+│   └── requirements.txt
+└── failing_pipeline/    # Error demo
+    ├── main.py
+    └── pipeline.json
 ```
 
 ---
@@ -73,6 +77,7 @@ This template includes several pre-configured pipelines to demonstrate various s
 | `pipeline_a` | **Standard Example** | Env vars + `requirements.txt` |
 | `pipeline_b` | **Custom Metadata** | Uses `data_processor.json` instead of `pipeline.json` |
 | `pipeline_c` | **Minimalist** | Only a `main.py`—nothing else |
+| `notebook_example` | **Notebook Pipeline** | Jupyter `main.ipynb`, cell-level retries, `type: "notebook"` |
 | `failing_pipeline` | **Error Testing** | Demonstrates how failures look in the UI |
 | `delayed_success` | **Runtime Testing** | 20s delay to test status monitoring |
 | `delayed_random` | **Retry Demo** | 20s delay followed by random success/failure |
