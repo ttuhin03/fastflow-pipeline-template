@@ -1,6 +1,6 @@
 {
-  "description": "Example with every pipeline.json field set. Use as reference for all options.",
-  "tags": ["example", "reference", "full-config"],
+  "description": "Maximal example: pipeline-level options plus per-schedule overrides for CPU, memory, timeout, retry, default_env, encrypted_env, enabled.",
+  "tags": ["example", "reference", "full-config", "multi-schedule"],
   "type": "script",
   "enabled": true,
   "python_version": "3.12",
@@ -25,8 +25,58 @@
     "DB_PASSWORD": "<in-UI-Fuer-pipeline.json-verschluesseln-erzeugen>"
   },
   "webhook_key": "replace-with-your-secret-in-production",
-  "schedule_cron": "0 8 * * *",
-  "schedule_start": "2025-01-01T00:00:00",
-  "schedule_end": "2025-12-31T23:59:59",
-  "max_instances": 1
+  "max_instances": 1,
+  "schedules": [
+    {
+      "id": "prod",
+      "schedule_cron": "0 8 * * *",
+      "schedule_start": "2025-01-01T00:00:00",
+      "schedule_end": "2025-12-31T23:59:59",
+      "enabled": true,
+      "cpu_hard_limit": 2,
+      "mem_hard_limit": "2g",
+      "cpu_soft_limit": 1.5,
+      "mem_soft_limit": "1.5g",
+      "timeout": 7200,
+      "retry_attempts": 5,
+      "retry_strategy": {
+        "type": "exponential_backoff",
+        "initial_delay": 120,
+        "max_delay": 3600,
+        "multiplier": 2
+      },
+      "default_env": {
+        "ENVIRONMENT": "production",
+        "DRY_RUN": "false"
+      },
+      "encrypted_env": {
+        "PROD_API_KEY": "<in-UI-verschluesseln-fuer-diesen-Schedule>"
+      }
+    },
+    {
+      "id": "staging",
+      "schedule_interval_seconds": 3600,
+      "enabled": true,
+      "cpu_hard_limit": 0.5,
+      "mem_hard_limit": "512m",
+      "timeout": 1800,
+      "retry_attempts": 1,
+      "default_env": {
+        "ENVIRONMENT": "staging",
+        "DRY_RUN": "true"
+      },
+      "encrypted_env": {
+        "STAGING_API_KEY": "<in-UI-verschluesseln-fuer-diesen-Schedule>"
+      }
+    },
+    {
+      "id": "nightly",
+      "schedule_cron": "0 2 * * *",
+      "enabled": false,
+      "default_env": {
+        "ENVIRONMENT": "nightly",
+        "FULL_SYNC": "true"
+      }
+    }
+  ]
 }
