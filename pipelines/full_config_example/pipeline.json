@@ -4,8 +4,7 @@
   "type": "script",
   "enabled": true,
   "python_version": "3.12",
-
-  "cpu_hard_limit": 1.0,
+  "cpu_hard_limit": 1,
   "mem_hard_limit": "1g",
   "cpu_soft_limit": 0.8,
   "mem_soft_limit": "800m",
@@ -15,16 +14,17 @@
     "type": "exponential_backoff",
     "initial_delay": 60,
     "max_delay": 3600,
-    "multiplier": 2.0
+    "multiplier": 2
   },
-
   "default_env": {
     "LOG_LEVEL": "INFO",
     "MY_VAR": "from_pipeline_json"
   },
-
+  "encrypted_env": {
+    "API_KEY": "<in-UI-Fuer-pipeline.json-verschluesseln-erzeugen>",
+    "DB_PASSWORD": "<in-UI-Fuer-pipeline.json-verschluesseln-erzeugen>"
+  },
   "webhook_key": "replace-with-your-secret-in-production",
-
   "schedule_cron": "0 8 * * *",
   "schedule_start": "2025-01-01T00:00:00",
   "schedule_end": "2025-12-31T23:59:59",
