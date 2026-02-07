@@ -1,6 +1,11 @@
 {
-  "description": "Maximal example: pipeline-level options plus per-schedule overrides for CPU, memory, timeout, retry, default_env, encrypted_env, enabled.",
-  "tags": ["example", "reference", "full-config", "multi-schedule"],
+  "description": "Maximal example: pipeline-level options plus per-schedule overrides for CPU, memory, timeout, retry, default_env, encrypted_env, enabled, webhook_key (pipeline-level and per schedule).",
+  "tags": [
+    "example",
+    "reference",
+    "full-config",
+    "multi-schedule"
+  ],
   "type": "script",
   "enabled": true,
   "python_version": "3.12",
@@ -51,7 +56,8 @@
       },
       "encrypted_env": {
         "PROD_API_KEY": "<in-UI-verschluesseln-fuer-diesen-Schedule>"
-      }
+      },
+      "webhook_key": "replace-with-prod-webhook-secret"
     },
     {
       "id": "staging",
@@ -67,7 +73,8 @@
       },
       "encrypted_env": {
         "STAGING_API_KEY": "<in-UI-verschluesseln-fuer-diesen-Schedule>"
-      }
+      },
+      "webhook_key": "replace-with-staging-webhook-secret"
     },
     {
       "id": "nightly",
