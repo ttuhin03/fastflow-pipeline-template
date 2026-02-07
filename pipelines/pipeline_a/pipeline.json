@@ -13,6 +13,6 @@
   },
   "default_env": {"LOG_LEVEL": "INFO"},
   "downstream_triggers": [
-    {"pipeline": "pipeline_b", "on_success": true, "on_failure": false}
+    {"pipeline": "pipeline_b", "on_success": true, "on_failure": false, "run_config_id": "prod"}
   ]
 }

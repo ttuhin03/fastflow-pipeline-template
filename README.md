@@ -161,7 +161,7 @@ When a pipeline finishes, it can automatically start others. Set `downstream_tri
 ```json
 {
   "downstream_triggers": [
-    {"pipeline": "pipeline_b", "on_success": true, "on_failure": false},
+    {"pipeline": "pipeline_b", "on_success": true, "on_failure": false, "run_config_id": "prod"},
     {"pipeline": "pipeline_c", "on_success": true, "on_failure": true}
   ]
 }
@@ -169,8 +169,9 @@ When a pipeline finishes, it can automatically start others. Set `downstream_tri
 
 - `on_success`: Start downstream when this pipeline succeeds (default: `true`)
 - `on_failure`: Start downstream when this pipeline fails (default: `false`)
+- `run_config_id` (optional): Schedule id (`schedules[].id`) of the downstream pipeline to run; if omitted, the downstream runs with default config.
 
-See `chaining_upstream` / `chaining_downstream` and the `pipeline_a` → `pipeline_b` → `pipeline_c` chain.
+See `chaining_upstream` / `chaining_downstream` and the `pipeline_a` → `pipeline_b` → `pipeline_c` chain (all use `run_config_id` where the downstream pipeline has `schedules`).
 
 ### 🔗 Triggering via Webhooks
 You can trigger any pipeline via a simple HTTP POST request if you define a `webhook_key`:

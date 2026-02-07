@@ -1,9 +1,12 @@
 {
-  "description": "Pipeline using alternative JSON filename (pipeline_b.json). Triggers pipeline_c on success.",
+  "description": "Pipeline using alternative JSON filename (e.g. data_processor.json). Triggers pipeline_c on success. Use run_config_id to run downstream with a specific schedule.",
   "tags": ["example", "custom-json"],
   "enabled": true,
   "webhook_key": "b-secret-webhook-key",
+  "schedules": [
+    { "id": "prod", "schedule_cron": "0 10 * * *", "enabled": true }
+  ],
   "downstream_triggers": [
-    {"pipeline": "pipeline_c", "on_success": true, "on_failure": false}
+    { "pipeline": "pipeline_c", "on_success": true, "on_failure": false, "run_config_id": "prod" }
   ]
 }

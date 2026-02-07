@@ -1,11 +1,7 @@
 {
-  "description": "Upstream pipeline – triggers chaining_downstream on success.",
+  "description": "Upstream pipeline – triggers chaining_downstream on success. Use run_config_id to start downstream with a specific schedule (schedules[].id).",
   "tags": ["example", "chaining"],
   "downstream_triggers": [
-    {
-      "pipeline": "chaining_downstream",
-      "on_success": true,
-      "on_failure": false
-    }
+    { "pipeline": "chaining_downstream", "on_success": true, "on_failure": false, "run_config_id": "prod" }
   ]
 }

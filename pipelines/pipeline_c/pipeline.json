@@ -1,0 +1,7 @@
+{
+  "description": "Downstream pipeline – triggered by pipeline_b on success. Schedules allow run_config_id in downstream_triggers.",
+  "tags": ["example", "chaining"],
+  "schedules": [
+    { "id": "prod", "schedule_cron": "0 11 * * *", "enabled": true }
+  ]
+}
