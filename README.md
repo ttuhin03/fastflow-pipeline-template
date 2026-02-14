@@ -11,15 +11,17 @@ Welcome to the official template for [Fast-Flow](https://github.com/ttuhin03/fas
 
 Fast-Flow is built on the principle of **Zero-Config Discovery**. You don't need to register pipelines in a database or a UI—just push your code.
 
-1.  **Create a Directory**: Add a new folder under `pipelines/` (e.g., `pipelines/data_sync/`).
+1.  **Create a Directory**: Add a new folder at the repo root (e.g. `data_sync/`).
 2.  **Add `main.py`**: This is your entry point. Fast-Flow will execute this file.
 3.  **Define Dependencies**: Add a `requirements.txt` if you need external packages.
 4.  **Configure (Optional)**: Add a `pipeline.json` to fine-tune resource limits and retries.
 
 ### 📂 Directory Structure
 
+Pipeline folders sit at the **repo root** so Fast-Flow discovers them without setting a subdirectory.
+
 ```text
-pipelines/
+repo-root/
 ├── pipeline_a/          # Standard example
 │   ├── main.py
 │   ├── requirements.txt
@@ -67,7 +69,7 @@ The biggest pain point in modern orchestration is "Docker Hell"—where code wor
 
 ### Test it in seconds:
 ```bash
-cd pipelines/pipeline_a
+cd pipeline_a
 pip install -r requirements.txt  # Or 'uv pip install' for speed
 python main.py
 ```
